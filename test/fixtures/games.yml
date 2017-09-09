@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  data: MyText
+  active: false
+  started: false
+
+two:
+  data: MyText
+  active: false
+  started: false

@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :rememberable, :validatable, :authentication_keys => [:username]
 
-  validates :username, uniqueness: true, length: { minimum: 6 }
+  validates :username, uniqueness: true, length: { minimum: 2 }
 
   def email_required?
     false

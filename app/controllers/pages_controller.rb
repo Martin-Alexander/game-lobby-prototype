@@ -15,4 +15,16 @@ class PagesController < ApplicationController
       @is_at = "main_menu"
     end
   end
+
+  def join_game
+    game = Game.find(params[:game_id])
+    Player.create(status: "player", host: false, game: game, user: current_user)
+    current_user.update(is_at: "stagging")
+    @is_at = "staging"
+    render "update"
+  end
+
+  def leave_game
+    
+  end
 end

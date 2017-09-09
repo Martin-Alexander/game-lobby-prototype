@@ -1,3 +1,10 @@
+<%= link_to "Main Menu", update_path({destination: "main_menu"}), method: :post, remote: true %>
+
 <h1>Lobby</h1>
 
-<%= link_to "Main Menu", update_path({destination: "main_menu"}), method: :post, remote: true %>
+<% Game.where(started: false).each do |game| %>
+  <div>
+    <span>Hosted by <strong><%= game.host.user.username %></strong></span>
+    <%= link_to "Join Game", join_game_path({game_id: game.id}), method: :post, remote: true %>
+  </div>
+<% end %>

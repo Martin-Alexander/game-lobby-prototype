@@ -24,4 +24,13 @@ class User < ApplicationRecord
   def self.how_many_online
     User.where(online: true).length
   end
+
+  def active_game_in
+    if self.status != "game"
+    Game.joins(:players).where("players.user_id = ? AND (started = ? OR () ").first
+  end
+
+  def all_games_in
+    Game.joins(:players).where(players: {user: self})
+  end
 end

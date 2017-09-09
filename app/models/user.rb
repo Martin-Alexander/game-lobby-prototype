@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :rememberable, :validatable, :authentication_keys => [:username]
 
   validates :username, uniqueness: true, length: { minimum: 2 }
-  validates :is_at, inclusion: { in: {"main_menu", "my_games", "lobby", "staging", "in_game"}}
+  validates :is_at, inclusion: { in: ["main_menu", "my_games", "lobby", "staging", "in_game"]}
 
   def email_required?
     false

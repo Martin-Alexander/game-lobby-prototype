@@ -1,5 +1,7 @@
 puts "Wiping database..."
 User.destroy_all
+Game.destroy_all
+Player.destroy_all
 puts "Database clean."
 
 usernames = ["martin", "chloe", "sophie"]

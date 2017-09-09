@@ -1,5 +1,5 @@
 class Game < ApplicationRecord
-  has_many :players
+  has_many :players, dependent: :destroy
 
   validates :data, presence: true
   validates :active, presence: true

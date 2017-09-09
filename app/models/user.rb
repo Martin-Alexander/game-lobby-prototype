@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :rememberable, :validatable, :authentication_keys => [:username]
 
+  has_many :players, dependent: :destroy
+
   validates :username, uniqueness: true, length: { minimum: 2 }
   validates :is_at, inclusion: { in: ["main_menu", "my_games", "lobby", "staging", "in_game"]}
 

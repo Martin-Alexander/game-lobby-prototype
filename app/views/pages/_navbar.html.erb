@@ -5,4 +5,4 @@
   <%= link_to "Sign in", new_user_session_path %>
   <%= link_to "Sign up", new_user_registration_path %>
 <% end %>  
-<p>Users online: <strong><%= User.how_many_online %><strong></p>
+<p>Users online: <strong id="number-of-users-online"><%= User.how_many_online %><strong></p>

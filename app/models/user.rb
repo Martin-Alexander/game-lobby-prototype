@@ -25,12 +25,12 @@ class User < ApplicationRecord
     User.where(online: true).length
   end
 
-  def active_game_in
-    if self.status != "game"
-    Game.joins(:players).where("players.user_id = ? AND (started = ? OR () ").first
+  def game_lobby_in
+    Game.joins(:players).where(players: { user: self }, started: false).first
   end
 
-  def all_games_in
-    Game.joins(:players).where(players: {user: self})
+  def remove_from_lobby
+    Player.where(game: self.game_lobby_in, user: self).first.destroy
+    self.is_at = "staging"
   end
 end

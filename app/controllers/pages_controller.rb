@@ -24,7 +24,9 @@ class PagesController < ApplicationController
     render "update"
   end
 
-  def leave_game
-    
+  def leave_lobby
+    current_user.remove_from_lobby
+    @is_at = "lobby"
+    render "update"
   end
 end

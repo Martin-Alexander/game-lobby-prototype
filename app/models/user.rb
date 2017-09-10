@@ -31,10 +31,15 @@ class User < ApplicationRecord
 
   def remove_from_lobby
     game_lobby = self.game_lobby_in
+    player_was_host = Player.where(game: game_lobby, user: self).first.host
     Player.where(game: game_lobby, user: self).first.destroy
     self.update(is_at: "main_lobby")
 
-    game_lobby.destroy if game_lobby.players.count == 0
+    if game_lobby.players.count == 0
+      game_lobby.destroy
+    elsif player_was_host 
+      game_lobby.players.first.update(host: true)
+    end
   end
 
   def create_game

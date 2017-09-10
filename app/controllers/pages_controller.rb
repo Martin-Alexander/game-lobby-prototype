@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  before_action :authenticate_user!
+
   def main
     if current_user
       @is_at = current_user.is_at

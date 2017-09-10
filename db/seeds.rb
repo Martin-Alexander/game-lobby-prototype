@@ -12,14 +12,14 @@ puts "Seeding users..."
 
 puts "Done seeding users."
 
-puts "Seeding games & players..."
+# puts "Seeding games & players..."
 
-# Just created a new game
-game_one = Game.create! data: "dummy data", active: false, started: false
-Player.create! status: "player", host: true, game: game_one, user: martin
+# # Just created a new game
+# game_one = Game.create! data: "dummy data", active: false, started: false
+# Player.create! status: "player", host: true, game: game_one, user: martin
 
-game_two = Game.create! data: "dummy data", active: false, started: false
-Player.create! status: "player", host: true, game: game_two, user: chloe
+# game_two = Game.create! data: "dummy data", active: false, started: false
+# Player.create! status: "player", host: true, game: game_two, user: chloe
 
 # # Game fills up with one person
 # game_three = Game.create! data: "dummy data", active: false, started: false
@@ -93,4 +93,4 @@ Player.create! status: "player", host: true, game: game_two, user: chloe
 # Player.create! status: "player", host: false, game: game_seventeen, user: chloe
 # Player.create! status: "observer", host: false, game: game_seventeen, user: martin
 
-puts "Done seeding games & players."
+# puts "Done seeding games & players."

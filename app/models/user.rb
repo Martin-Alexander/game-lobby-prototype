@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :players, dependent: :destroy
 
   validates :username, uniqueness: true, length: { minimum: 2 }
-  validates :is_at, inclusion: { in: ["main_menu", "my_games", "lobby", "staging", "in_game"]}
+  validates :is_at, inclusion: { in: ["main_menu", "my_games", "main_lobby", "game_lobby", "in_game"]}
 
   def email_required?
     false
@@ -30,7 +30,16 @@ class User < ApplicationRecord
   end
 
   def remove_from_lobby
-    Player.where(game: self.game_lobby_in, user: self).first.destroy
-    self.is_at = "staging"
+    game_lobby = self.game_lobby_in
+    Player.where(game: game_lobby, user: self).first.destroy
+    self.update(is_at: "main_lobby")
+
+    game_lobby.destroy if game_lobby.players.count == 0
+  end
+
+  def create_game
+    new_game = Game.create!(data: "dummy", active: false, started: false)
+    Player.create!(user: self, game: new_game, host: true, status: "player")
+    self.update(is_at: "game_lobby")
   end
 end

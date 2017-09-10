@@ -19,14 +19,20 @@ class PagesController < ApplicationController
   def join_game
     game = Game.find(params[:game_id])
     Player.create(status: "player", host: false, game: game, user: current_user)
-    current_user.update(is_at: "stagging")
-    @is_at = "staging"
+    current_user.update(is_at: "game_lobby")
+    @is_at = "game_lobby"
     render "update"
   end
 
-  def leave_lobby
+  def leave_game
     current_user.remove_from_lobby
-    @is_at = "lobby"
+    @is_at = "main_lobby"
+    render "update"
+  end
+
+  def create_game
+    current_user.create_game
+    @is_at = "game_lobby"
     render "update"
   end
 end

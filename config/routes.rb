@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   root to: 'pages#main', as: 'root'
   post '/update', to: 'pages#update', as: 'update'
   post '/join_game', to: 'pages#join_game', as: 'join_game'
-  post '/leave_lobby', to: 'pages#leave_lobby', as: 'leave_lobby'
+  post '/leave_game', to: 'pages#leave_game', as: 'leave_game'
+  post '/create_game', to: 'pages#create_game', as: 'create_game'
 end

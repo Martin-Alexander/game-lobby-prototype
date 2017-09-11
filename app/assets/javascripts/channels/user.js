@@ -1,4 +1,4 @@
-App.game = App.cable.subscriptions.create("UserChannel", {
+var userChannel = App.cable.subscriptions.create("UserChannel", {
   connected: function() {},
   disconnected: function() {},
   received: function(data) {

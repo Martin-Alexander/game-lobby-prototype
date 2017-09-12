@@ -30,10 +30,17 @@ class User < ApplicationRecord
   end
 
   def remove_from_lobby
-    game_lobby = self.game_lobby_in
-    player_was_host = Player.where(game: game_lobby, user: self).first.host
-    Player.where(game: game_lobby, user: self).first.destroy
+    # As far as I can tell, the main issue is that the following line of code is
+    # not being called on the second refresh. When I use byebug to run it myself 
+    # it seems to always work, otherwise it is simply not run even though other
+    # parts of this function are being run
     self.update(is_at: "main_lobby")
+    game_lobby = self.game_lobby_in
+    player = Player.where(game: game_lobby, user: self).first
+    if player 
+      player_was_host = player.host
+      Player.where(game: game_lobby, user: self).first.destroy
+    end
 
     if game_lobby.players.count == 0
       game_lobby.destroy

@@ -3,16 +3,17 @@ class UserChannel < ApplicationCable::Channel
     stream_from "user_channel"
     current_user.update(online: true) if current_user
     update_number_of_users_online
-
-    puts "#{current_user.username} SUBSCRIBED."
   end
 
   def unsubscribed
-    current_user.update(online: false) if current_user
-    update_number_of_users_online
+    if current_user
+      current_user.remove_from_lobby
+      current_user.update(online: false) 
 
-    puts "#{current_user.username} UNSUBSCRIBED. REMOVING FROM LOBBY"
-    current_user.remove_from_lobby if current_user.is_at == "game_lobby"
+      # even if I put it here
+      current_user.update(is_at: "main_lobby")
+    end
+    update_number_of_users_online
   end
 
   def update_number_of_users_online

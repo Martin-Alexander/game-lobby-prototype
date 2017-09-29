@@ -47,8 +47,12 @@ class User < ApplicationRecord
   def leave_lobby
     if self.is_in == "lobby"
       game = self.lobby
-      Player.where(user: self, game: game).first.destroy!
-      game.destroy! if game.players.count.zero?
+      player = Player.where(user: self, game: game).first
+      if game.players.count.zero?
+        game.destroy!
+      elsif player.host
+        Player.where(game: game).order(:created_at).first.update! host: true
+      end
     else
       raise StandardError, "User is not in lobby"
     end

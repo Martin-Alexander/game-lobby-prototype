@@ -6,13 +6,7 @@ class UserChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    if current_user
-      current_user.remove_from_lobby
-      current_user.update(online: false) 
-
-      # even if I put it here
-      current_user.update(is_at: "main_lobby")
-    end
+    current_user.update(online: false) if current_user
     update_number_of_users_online
   end
 

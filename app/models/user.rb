@@ -7,7 +7,6 @@ class User < ApplicationRecord
   has_many :games
 
   validates :username, uniqueness: true, length: { minimum: 2 }
-  # validates :is_at, inclusion: { in: ["main_menu", "my_games", "main_lobby", "game_lobby", "in_game"]}
 
   def email_required?
     false

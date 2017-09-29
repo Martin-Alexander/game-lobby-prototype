@@ -3,7 +3,8 @@
 <% @all_lobby_games.each do |game| %>
   <div>
     <h3><%= game.id %></h3>
-    <span><%= game.players.count %></span>
-    <span><%= game.host.username %></span>
+    <div><%= game.players.count %></div>
+    <div><%= game.host.username %></div>
+    <div><%# link_to "Join Game", game_lobby_path(game) %></div>
   </div>
 <% end %>

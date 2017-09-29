@@ -9,6 +9,10 @@ class Game < ApplicationRecord
     self.players.where(user_id: player_object.id).any?
   end
 
+  def host
+    self.players.where(host: true).first.user
+  end
+
   private
 
   def check_if_user(object)

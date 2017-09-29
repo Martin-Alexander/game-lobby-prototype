@@ -36,7 +36,8 @@ class User < ApplicationRecord
   end
 
   def lobby
-    Game.joins(:players).where("players.user_id = ? AND state = ?", self.id, "lobby").first
+    lobby_game = Game.joins(:players).where("players.user_id = ? AND state = ?", self.id, "lobby").first
+    lobby_game ? lobby_game : false
   end
 
   def join_lobby(game)
@@ -57,6 +58,7 @@ class User < ApplicationRecord
       elsif player.host
         Player.where(game: game).order(:created_at).first.update! host: true
       end
+      player.destroy!
     else
       raise StandardError, "User is not in lobby"
     end

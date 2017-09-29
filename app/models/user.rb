@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :rememberable, :validatable, :authentication_keys => [:username]
 
-  has_many :games
+  has_many :players
+  has_many :games, through: :pla
 
   validates :username, uniqueness: true, length: { minimum: 2 }
 
@@ -20,7 +21,13 @@ class User < ApplicationRecord
     false
   end
 
-  def is_at?
-    
+  def is_in
+    if Game.joins(:players).where("players.user_id = ? AND in_game = ?", self.id, true).any?
+      "game"
+    elsif Game.joins(:players).where("players.user_id = ? AND state = ?", self.id, "lobby").any?
+      "lobby"
+    else
+      "menus"
+    end
   end
 end

@@ -5,7 +5,7 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
       t.references :game, foreign_key: true
       t.string :role
       t.boolean :host
-      t.boolean :presence
+      t.boolean :in_game, default: false
 
       t.timestamps
     end

@@ -9,6 +9,10 @@ class User < ApplicationRecord
 
   validates :username, uniqueness: true, length: { minimum: 2 }
 
+  def self.how_many_online
+    User.where(online: true).count
+  end
+
   def email_required?
     false
   end

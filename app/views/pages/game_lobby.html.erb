@@ -1,3 +1,5 @@
-<h3><%= @game.id %></h3>
-<div><%= @game.players.count %></div>
-<div><%= @game.host.username %></div>
+<div><%= link_to "Leave Lobby", root_path %></div>
+
+<div>Game ID: <strong><%= @game.id %></strong></div>
+<div>Number of players: <strong><%= @game.players.count %></strong></div>
+<div>Host: <strong><%= @game.host.username %></strong></div>

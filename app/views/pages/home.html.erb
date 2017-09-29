@@ -5,6 +5,6 @@
     <h3><%= game.id %></h3>
     <div><%= game.players.count %></div>
     <div><%= game.host.username %></div>
-    <div><%# link_to "Join Game", game_lobby_path(game) %></div>
+    <div><%= link_to "Join Game", game_lobby_path(game) %></div>
   </div>
 <% end %>

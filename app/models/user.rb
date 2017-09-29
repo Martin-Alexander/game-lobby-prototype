@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :rememberable, :validatable, :authentication_keys => [:username]
 
   has_many :players
-  has_many :games, through: :pla
+  has_many :games, through: :players
 
   validates :username, uniqueness: true, length: { minimum: 2 }
 

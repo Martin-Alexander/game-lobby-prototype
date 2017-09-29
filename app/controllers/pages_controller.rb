@@ -8,6 +8,7 @@ class PagesController < ApplicationController
 
   def game_lobby
     @game = Game.find(params[:id])
+    @players_in_lobby = Player.where(game: @game).order(host: :desc)
     current_user.join_lobby(@game)
   end
 

@@ -3,3 +3,15 @@
 <div>Game ID: <strong><%= @game.id %></strong></div>
 <div>Number of players: <strong><%= @game.players.count %></strong></div>
 <div>Host: <strong><%= @game.host.username %></strong></div>
+<br>
+
+<% @players_in_lobby.each do |player| %>
+  <div>
+    <div><strong><%= player.username %></strong></div>
+    <% if player.host %>
+      <span>host, </span>
+    <% end %>
+    <span><%= player.role %></span>
+    <br><br>
+  </div>
+<% end %>

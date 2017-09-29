@@ -2,10 +2,8 @@
 
 one:
   data: MyText
-  active: false
-  started: false
+  state: MyString
 
 two:
   data: MyText
-  active: false
-  started: false
+  state: MyString

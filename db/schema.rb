@@ -10,28 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170909184722) do
+ActiveRecord::Schema.define(version: 20170929172927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
     t.text "data"
-    t.boolean "active", default: false
-    t.boolean "started", default: false
+    t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "players", force: :cascade do |t|
-    t.string "status"
-    t.bigint "game_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "host", default: false
-    t.index ["game_id"], name: "index_players_on_game_id"
-    t.index ["user_id"], name: "index_players_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,12 +35,8 @@ ActiveRecord::Schema.define(version: 20170909184722) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "online", default: false
-    t.string "is_at", default: "main_menu"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "players", "games"
-  add_foreign_key "players", "users"
 end

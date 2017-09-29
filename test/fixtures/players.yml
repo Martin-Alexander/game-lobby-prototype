@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  status: MyString
-  game: one
   user: one
+  game: one
+  role: MyString
+  host: false
 
 two:
-  status: MyString
-  game: two
   user: two
+  game: two
+  role: MyString
+  host: false

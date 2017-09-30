@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 20170929173532) do
     t.bigint "game_id"
     t.string "role"
     t.boolean "host"
-    t.boolean "in_game", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_players_on_game_id"

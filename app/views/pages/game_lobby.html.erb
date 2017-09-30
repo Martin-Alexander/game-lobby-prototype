@@ -15,3 +15,11 @@
     <br><br>
   </div>
 <% end %>
+
+<div>
+  <% if current_user.player_in_lobby.role == "player" %>
+    <div>Change role to <%= link_to "<strong>Observer</strong>".html_safe, change_role_path(new_role: "observer"), remote: true, method: :post %></div>
+  <% else %>
+    <div>Change role to <%= link_to "<strong>Player</strong>".html_safe, change_role_path(new_role: "player"), remote: true, method: :post %></div>
+  <% end %>
+</div>

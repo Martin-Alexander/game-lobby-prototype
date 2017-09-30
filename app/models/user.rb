@@ -41,7 +41,7 @@ class User < ApplicationRecord
   end
 
   def player_in_lobby
-    player = Player.joins(:game).where("player.user.id = ? AND game.state = ?", self.if, "lobby").first
+    player = Player.joins(:game).where("user_id = ? AND games.state = ?", self.id, "lobby").first
   end
 
   def change_role(new_role)

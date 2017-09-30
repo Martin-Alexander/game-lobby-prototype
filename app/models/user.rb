@@ -62,7 +62,7 @@ class User < ApplicationRecord
     if self.is_in == "lobby"
       game = self.lobby
       player = Player.where(user: self, game: game).first
-      if game.players.count.zero?
+      if game.players.count == 1
         game.destroy!
       elsif player.host
         Player.where(game: game).order(:created_at).first.update! host: true
@@ -87,9 +87,10 @@ class User < ApplicationRecord
   private
 
   def broadcast(game, increment)
-    ActionCable.server.broadcast "user_channel", { "updateNumberOfPlayersInLobby" => 
+    ActionCable.server.broadcast "user_channel", { "playerUpdate" => 
       {
         "gameId" => game.id,
+        "userId" => self.id,
         "increment" => increment 
       } 
     }

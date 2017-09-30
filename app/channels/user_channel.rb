@@ -11,6 +11,9 @@ class UserChannel < ApplicationCable::Channel
   end
 
   def update_number_of_users_online
-    ActionCable.server.broadcast "user_channel", { "totalNumberOfUsersOnline" => User.how_many_online }
+    ActionCable.server.broadcast "user_channel", { "userUpdate" => {
+      "numberOfUsersOnline" => User.how_many_online 
+      } 
+    }
   end
 end

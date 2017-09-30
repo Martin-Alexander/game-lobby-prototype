@@ -52,6 +52,7 @@ class User < ApplicationRecord
     check_if_lobby(game)
     if !game.user_in_game?(self)
       Player.create! user: self, game: game, host: false, role: "player", in_game: false
+      broadcast(game, 1)
     else
       raise StandardError, "User is already in lobby"
     end
@@ -66,6 +67,7 @@ class User < ApplicationRecord
       elsif player.host
         Player.where(game: game).order(:created_at).first.update! host: true
       end
+      broadcast(game, -1)
       player.destroy!
     else
       raise StandardError, "User is not in lobby"
@@ -83,6 +85,15 @@ class User < ApplicationRecord
   end
 
   private
+
+  def broadcast(game, increment)
+    ActionCable.server.broadcast "user_channel", { "updateNumberOfPlayersInLobby" => 
+      {
+        "gameId" => game.id,
+        "increment" => increment 
+      } 
+    }
+  end
 
   def check_if_lobby(object)
     unless object.is_a?(Game) && object.state == "lobby"

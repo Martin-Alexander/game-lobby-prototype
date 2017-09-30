@@ -3,7 +3,7 @@ function updateNumberOfUsersOnline(numberOfUsersOnline) {
 }
 
 function updateNumberOfPlayersInEachLobby(gameId, increment) {
-  const lobbyPlayerCounter = document.querySelector("#lobby-" + gameId);
+  const lobbyPlayerCounter = document.querySelector("#lobby-" + gameId + " > div > .number-of-players-in-lobby");
 
   /*
     Yeah, so I don't know what the fuck is going on here. For whatever reason
@@ -43,6 +43,12 @@ function changePlayerRole(gameId, userId, newRole) {
   }
 }
 
+function destroyGame(gameId) {
+  console.log(location.pathname);
+  const lobbyElementToDelete = document.querySelector("#lobby-" + gameId);
+  if (lobbyElementToDelete) { document.querySelector("#page").removeChild(lobbyElementToDelete); }
+}
+
 var userChannel = App.cable.subscriptions.create("UserChannel", {
   connected: function() {},
   disconnected: function() {},
@@ -57,6 +63,9 @@ var userChannel = App.cable.subscriptions.create("UserChannel", {
       if (location.pathname.match(/^\/$/)) {
         if (data.playerUpdate.change.incrementPlayerCount) {
           updateNumberOfPlayersInEachLobby(data.playerUpdate.gameId, data.playerUpdate.change.incrementPlayerCount);
+        }
+        if (data.playerUpdate.change == "gameDestroy") {
+          destroyGame(data.playerUpdate.gameId);
         }
       } else if (location.pathname.match(/lobby/)) {
         if (data.playerUpdate.change.newRole) {

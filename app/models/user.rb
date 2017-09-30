@@ -64,6 +64,7 @@ class User < ApplicationRecord
       game = self.lobby
       player = Player.where(user: self, game: game).first
       if game.players.count == 1
+        broadcast(game, "gameDestroy")
         game.destroy!
       elsif player.host
         Player.where(game: game).order(:created_at).first.update! host: true

@@ -52,7 +52,7 @@ class User < ApplicationRecord
   def join_lobby(game)
     check_if_lobby(game)
     if !game.user_in_game?(self)
-      Player.create! user: self, game: game, host: false, role: "player", in_game: false
+      Player.create! user: self, game: game, host: false, role: "player"
       broadcast(game, { incrementPlayerCount: 1 })
     else
       raise StandardError, "User is already in lobby"
@@ -78,7 +78,7 @@ class User < ApplicationRecord
   def create_new_lobby
     if self.is_in == "menus"
       new_game = Game.create! data: "", state: "lobby"
-      Player.create! user: self, game: new_game, role: "player", host: true, in_game: false
+      Player.create! user: self, game: new_game, role: "player", host: true
       return new_game
     else
       raise StandardError, "User must be in 'menus' to create lobby"

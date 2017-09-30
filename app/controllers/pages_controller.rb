@@ -7,13 +7,17 @@ class PagesController < ApplicationController
     @total_number_of_users_online = User.how_many_online 
   end
 
-  def game_lobby
-    @game = Game.find(params[:id])
-    if current_user.lobby != @game
-      remove_user_from_lobby 
-      current_user.join_lobby(@game)
+  def game_lobby  
+    @game = Game.find_by_id(params[:id]) 
+    if @game 
+      if current_user.lobby != @game
+        remove_user_from_lobby 
+        current_user.join_lobby(@game)
+      end
+      @players_in_lobby = Player.where(game: @game).order(host: :desc)
+    else
+      redirect_to root_path
     end
-    @players_in_lobby = Player.where(game: @game).order(host: :desc)
   end
 
   def change_role

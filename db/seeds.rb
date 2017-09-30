@@ -14,13 +14,13 @@ chloe = create_user("chloe", false)
 adele = create_user("adele", false)
 brittany = create_user("brittany", false)
 
-chloe_game = Game.create! data: "", state: "lobby"
-adele_game = Game.create! data: "", state: "lobby"
-brittany_game = Game.create! data: "", state: "lobby"
+# chloe_game = Game.create! data: "", state: "lobby"
+# adele_game = Game.create! data: "", state: "lobby"
+# brittany_game = Game.create! data: "", state: "lobby"
 
-Player.create! user: chloe, game: chloe_game, host: true, role: "player", in_game: false
-Player.create! user: adele, game: adele_game, host: true, role: "player", in_game: false
-Player.create! user: brittany, game: brittany_game, host: true, role: "player", in_game: false
+# Player.create! user: chloe, game: chloe_game, host: true, role: "player", in_game: false
+# Player.create! user: adele, game: adele_game, host: true, role: "player", in_game: false
+# Player.create! user: brittany, game: brittany_game, host: true, role: "player", in_game: false
 
 # Join/Create Lobby Test Seed
 

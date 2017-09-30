@@ -12,6 +12,10 @@ class PagesController < ApplicationController
     current_user.join_lobby(@game)
   end
 
+  def change_role
+    current_user.change_role(params[:new_role])
+  end
+
   private 
 
   def remove_user_from_lobby

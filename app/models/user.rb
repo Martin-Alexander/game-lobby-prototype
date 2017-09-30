@@ -40,6 +40,14 @@ class User < ApplicationRecord
     lobby_game ? lobby_game : false
   end
 
+  def player_in_lobby
+    player = Player.joins(:game).where("player.user.id = ? AND game.state = ?", self.if, "lobby").first
+  end
+
+  def change_role(new_role)
+    self.player_in_lobby.update! role: new_role if self.lobby
+  end
+
   def join_lobby(game)
     check_if_lobby(game)
     if !game.user_in_game?(self)

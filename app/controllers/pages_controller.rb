@@ -4,6 +4,7 @@ class PagesController < ApplicationController
 
   def home
     @all_lobby_games = Game.where(state: "lobby")
+    @total_number_of_users_online = User.how_many_online 
   end
 
   def game_lobby

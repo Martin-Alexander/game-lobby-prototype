@@ -1,4 +1,8 @@
-<h1>Home</h1>
+<div>
+  <div><%= link_to "Sign Out", destroy_user_session_path, method: :delete %> </div>
+  <div>Number of users online: <span id="total-number-of-users-online"><%= @total_number_of_users_online %></span></div>
+  <br>
+</div>
 
 <% @all_lobby_games.each do |game| %>
   <div>

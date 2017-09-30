@@ -6,20 +6,34 @@
 <br>
 
 <% @players_in_lobby.each do |player| %>
-  <div>
-    <div><strong><%= player.username %></strong></div>
+  <div id="user-<%= player.user.id%>">
+    <div class="player-username"><strong><%= player.username %></strong></div>
     <% if player.host %>
-      <span>host, </span>
+      <span class="player-host">host, </span>
     <% end %>
-    <span><%= player.role %></span>
+    <span class="player-role"><%= player.role %></span>
     <br><br>
   </div>
 <% end %>
 
-<div>
+<div id="change-role-button">
   <% if current_user.player_in_lobby.role == "player" %>
     <div>Change role to <%= link_to "<strong>Observer</strong>".html_safe, change_role_path(new_role: "observer"), remote: true, method: :post %></div>
   <% else %>
     <div>Change role to <%= link_to "<strong>Player</strong>".html_safe, change_role_path(new_role: "player"), remote: true, method: :post %></div>
   <% end %>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector("#change-role-button > div > a").addEventListener("click", function() {
+      if (this.firstElementChild.innerText == "Player") {
+        this.href = this.href.replace("observer", "player");
+        this.firstElementChild.innerText = "Observer";
+      } else {
+        this.href = this.href.replace("player", "observer");
+        this.firstElementChild.innerText = "Player";
+      }
+    });
+  })
+</script>

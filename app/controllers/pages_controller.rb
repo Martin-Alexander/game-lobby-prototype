@@ -25,7 +25,7 @@ class PagesController < ApplicationController
   end
 
   def create_game
-    new_game = Game.create_new_game_lobby(current_user)
+    new_game = current_user.create_new_game_lobby
     redirect_to game_lobby_path(new_game)
   end
 

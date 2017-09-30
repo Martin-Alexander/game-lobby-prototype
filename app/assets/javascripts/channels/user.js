@@ -44,9 +44,16 @@ function changePlayerRole(gameId, userId, newRole) {
 }
 
 function destroyGame(gameId) {
-  console.log(location.pathname);
   const lobbyElementToDelete = document.querySelector("#lobby-" + gameId);
   if (lobbyElementToDelete) { document.querySelector("#page").removeChild(lobbyElementToDelete); }
+}
+
+function createGame(gameId, hostName) {
+  console.log(location.pathname);
+  const newLobbyElement = document.createElement("div");
+  newLobbyElement.id = "lobby-" + gameId;
+  newLobbyElement.innerHTML = `<div>Game ID: <strong>${gameId}</strong></div><div>Number of Players: <strong class=\"number-of-players-in-lobby\">1</strong></div><div>Host: <strong>${hostName}</strong></div><div><a href=\"/lobby/${gameId}\">Join Game</a></div><br>`
+  document.querySelector("#page").append(newLobbyElement);
 }
 
 var userChannel = App.cable.subscriptions.create("UserChannel", {
@@ -59,13 +66,16 @@ var userChannel = App.cable.subscriptions.create("UserChannel", {
       } else if (location.pathname.match(/lobby/)) {
         // TODO: Potentially nothing
       }
-    } else if (data.playerUpdate) {
+    } else if (data.playerUpdate && document.cookie[document.cookie.length - 1] != data.playerUpdate.userId) {
       if (location.pathname.match(/^\/$/)) {
         if (data.playerUpdate.change.incrementPlayerCount) {
           updateNumberOfPlayersInEachLobby(data.playerUpdate.gameId, data.playerUpdate.change.incrementPlayerCount);
         }
         if (data.playerUpdate.change == "gameDestroy") {
           destroyGame(data.playerUpdate.gameId);
+        }
+        if (data.playerUpdate.change.newGame) {
+          createGame(data.playerUpdate.gameId, data.playerUpdate.change.newGame.hostName);
         }
       } else if (location.pathname.match(/lobby/)) {
         if (data.playerUpdate.change.newRole) {

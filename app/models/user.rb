@@ -44,6 +44,13 @@ class User < ApplicationRecord
     player = Player.joins(:game).where("user_id = ? AND games.state = ?", self.id, "lobby").first
   end
 
+  def create_new_game_lobby
+    new_game = Game.create! data: "", state: "lobby"
+    Player.create! user: self, game: new_game, role: "player", host: true
+    broadcast(new_game, { newGame: { hostName: self.username } })
+    return new_game
+  end
+
   def change_role(new_role)
     self.player_in_lobby.update! role: new_role if self.lobby
     broadcast(self.lobby, { newRole: new_role })

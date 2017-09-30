@@ -20,6 +20,11 @@ class PagesController < ApplicationController
     current_user.change_role(params[:new_role])
   end
 
+  def create_game
+    new_game = Game.create_new_game_lobby(current_user)
+    redirect_to game_lobby_path(new_game)
+  end
+
   private 
 
   def remove_user_from_lobby

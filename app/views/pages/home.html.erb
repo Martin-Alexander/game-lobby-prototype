@@ -4,6 +4,11 @@
   <br>
 </div>
 
+<div>
+  <div><%= link_to "Create Game", create_game_path, method: :post %></div>
+  <br>
+</div>
+
 <% @all_lobby_games.each do |game| %>
   <div>
     <div>Game ID: <strong><%= game.id %></strong></div>

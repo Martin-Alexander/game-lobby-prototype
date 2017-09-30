@@ -26,7 +26,7 @@ class User < ApplicationRecord
   end
 
   def is_in
-    if Game.joins(:players).where("players.user_id = ? AND players.in_game = ?", self.id, true).any?
+    if Game.joins(:players).where("players.user_id = ? AND state = ?", self.id, "game_on").any?
       "game"
     elsif Game.joins(:players).where("players.user_id = ? AND state = ?", self.id, "lobby").any?
       "lobby"

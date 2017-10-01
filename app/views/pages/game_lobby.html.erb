@@ -1,20 +1,20 @@
 <div><%= link_to "Leave Lobby", root_path %></div>
 
 <div>Game ID: <strong><%= @game.id %></strong></div>
-<div>Number of players: <strong><%= @game.players.count %></strong></div>
-<div>Host: <strong><%= @game.host.username %></strong></div>
+<div>Number of players: <strong id="number-of-players-in-lobby"><%= @game.players.count %></strong></div>
+<div>Host: <strong id="host-username"><%= @game.host.username %></strong></div>
 <br>
 
-<% @players_in_lobby.each do |player| %>
-  <div id="user-<%= player.user.id%>">
-    <div class="player-username"><strong><%= player.username %></strong></div>
-    <% if player.host %>
-      <span class="player-host">host, </span>
-    <% end %>
-    <span class="player-role"><%= player.role %></span>
-    <br><br>
-  </div>
-<% end %>
+<div id="playerlist">
+  <% @players_in_lobby.each do |player| %>
+    <div id="user-<%= player.user.id%>">
+      <div class="player-username"><strong><%= player.username %></strong></div>
+      <span class="player-host"><%= player.host ? "host, " : ""%></span>
+      <span class="player-role"><%= player.role %></span>
+      <br><br>
+    </div>
+  <% end %>
+</div>
 
 <div id="change-role-button">
   <% if current_user.player_in_lobby.role == "player" %>
@@ -30,9 +30,11 @@
       if (this.firstElementChild.innerText == "Player") {
         this.href = this.href.replace("observer", "player");
         this.firstElementChild.innerText = "Observer";
+        document.querySelector("#user-" + document.cookie[document.cookie.length - 1] + " > .player-role").innerText = "player";
       } else {
         this.href = this.href.replace("player", "observer");
         this.firstElementChild.innerText = "Player";
+        document.querySelector("#user-" + document.cookie[document.cookie.length - 1] + " > .player-role").innerText = "observer";
       }
     });
   })

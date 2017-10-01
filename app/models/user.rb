@@ -60,7 +60,7 @@ class User < ApplicationRecord
     check_if_lobby(game)
     if !game.user_in_game?(self)
       Player.create! user: self, game: game, host: false, role: "player"
-      broadcast(game, { incrementPlayerCount: 1 })
+      broadcast(game, { incrementPlayerCount: 1, username: self.username })
     else
       raise StandardError, "User is already in lobby"
     end
@@ -73,11 +73,16 @@ class User < ApplicationRecord
       if game.players.count == 1
         broadcast(game, "gameDestroy")
         game.destroy!
+        player.destroy!
       elsif player.host
-        Player.where(game: game).order(:created_at).first.update! host: true
+        player.destroy!
+        new_host = Player.where(game: game).order(:created_at).first
+        new_host.update! host: true
+        broadcast(game, { incrementPlayerCount: -1, newHost: { username: new_host.username, id: new_host.user.id } })
+      else
+        player.destroy!
+        broadcast(game, { incrementPlayerCount: -1 })
       end
-      broadcast(game, { incrementPlayerCount: -1 })
-      player.destroy!
     else
       raise StandardError, "User is not in lobby"
     end

@@ -25,8 +25,9 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  console.log("here?");
     document.querySelector("#change-role-button > div > a").addEventListener("click", function() {
+      console.log("called");
       if (this.firstElementChild.innerText == "Player") {
         this.href = this.href.replace("observer", "player");
         this.firstElementChild.innerText = "Observer";
@@ -37,5 +38,4 @@
         document.querySelector("#user-" + document.cookie[document.cookie.length - 1] + " > .player-role").innerText = "observer";
       }
     });
-  })
 </script>

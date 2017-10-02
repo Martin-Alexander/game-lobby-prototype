@@ -32,7 +32,6 @@ function changePlayerRole(gameId, userId, newRole) {
   } else {
     var oldRole = "player";
   }
-  console.log("martin");
   if (location.pathname.match("lobby\/" + gameId)) {
     document.querySelector("#user-" + userId + " > .player-role").innerHTML = newRole;
   }

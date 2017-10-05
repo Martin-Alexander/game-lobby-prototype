@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!
-  # before_action :remove_user_from_lobby, only: [ :home ]
   before_action :redirect_to_ongoing_game, only: [ :home, :game_lobby ]
 
   def home
@@ -11,7 +10,6 @@ class PagesController < ApplicationController
 
   def game_lobby  
     @game = Game.find_by_id(params[:id]) 
-    # redirect_away_from_invalid_game(@game)
     if current_user.lobby != @game
       remove_user_from_lobby 
       current_user.join_lobby(@game)
@@ -52,11 +50,8 @@ class PagesController < ApplicationController
   end
 
   def redirect_away_from_invalid_game(game)
-    # raise
     if current_user.is_in_lobby?
-      redirect_to game_lobby_path(current_user.lobby) if !game || game.state == "lobby"  
-    # elsif current_user.is_active_player_in_game?
-    #   redirect_to root_path if !game || game.state != "game_on"
+      redirect_to game_lobby_path(current_user.lobby)
     else
       redirect_to root_path if !game || !current_user.is_in_game?(game)
     end

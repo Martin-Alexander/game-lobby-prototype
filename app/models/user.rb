@@ -25,6 +25,12 @@ class User < ApplicationRecord
     false
   end
 
+  def active_game_in
+    game = Game.joins(:players).where("players.user_id = ? AND players.role = ? AND state = ?", self.id, "player", "game").first
+    raise StandardError, "User is not in active game" if game.nil?
+    game
+  end
+
   def is_active_player_in_game?
     Game.joins(:players).where("players.user_id = ? AND players.role = ? AND state = ?", self.id, "player", "game_on").any?
   end

@@ -13,6 +13,10 @@ class Game < ApplicationRecord
     self.players.where(host: true).first.user
   end
 
+  def start
+    self.update! state: "game_on"
+  end
+
   private
 
   def check_if_user(object)

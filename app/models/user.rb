@@ -25,14 +25,12 @@ class User < ApplicationRecord
     false
   end
 
-  def is_in
-    if Game.joins(:players).where("players.user_id = ? AND state = ?", self.id, "game_on").any?
-      "game"
-    elsif Game.joins(:players).where("players.user_id = ? AND state = ?", self.id, "lobby").any?
-      "lobby"
-    else
-      "menus"
-    end
+  def is_active_player_in_game?
+    Game.joins(:players).where("players.user_id = ? AND players.role = ? AND state = ?", self.id, "player", "game_on").any?
+  end
+
+  def is_in_lobby?
+    Game.joins(:players).where("players.user_id = ? AND state = ?", self.id, "lobby").any?
   end
 
   def lobby
@@ -67,7 +65,7 @@ class User < ApplicationRecord
   end
 
   def leave_lobby
-    if self.is_in == "lobby"
+    if self.is_in_lobby?
       game = self.lobby
       player = Player.where(user: self, game: game).first
       if game.players.count == 1
@@ -89,7 +87,7 @@ class User < ApplicationRecord
   end
 
   def create_new_lobby
-    if self.is_in == "menus"
+    if !self.is_in_lobby? && !self.is_active_player_in_game?
       new_game = Game.create! data: "", state: "lobby"
       Player.create! user: self, game: new_game, role: "player", host: true
       return new_game

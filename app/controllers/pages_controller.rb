@@ -35,6 +35,6 @@ class PagesController < ApplicationController
   private 
 
   def remove_user_from_lobby
-    current_user.leave_lobby if current_user.is_in == "lobby"
+    current_user.leave_lobby if current_user.is_in_lobby?
   end
 end

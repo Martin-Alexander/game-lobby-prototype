@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   before_action :redirect_to_ongoing_game, only: [ :home, :game_lobby ]
 
   def home
-    redirect_to_ongoing_game
+    remove_user_from_lobby
     @all_lobby_games = Game.where(state: "lobby")
     @total_number_of_users_online = User.how_many_online 
   end

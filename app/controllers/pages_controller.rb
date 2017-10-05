@@ -29,6 +29,9 @@ class PagesController < ApplicationController
     redirect_to game_lobby_path(new_game)
   end
 
+  def game
+  end
+
   private 
 
   def remove_user_from_lobby

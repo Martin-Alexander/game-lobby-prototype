@@ -25,13 +25,21 @@ class User < ApplicationRecord
     false
   end
 
+  def resign
+    game = active_game_in
+    player_in_active_game.update! role: "dead_player"
+    if game.active_players.count.zero?
+      game.update! state: "game_over"
+    end
+  end
+
   def is_in_game?(game)
     Game.joins(:players).where("players.user_id = ? AND games.id = ?", self.id, game.id).any?
   end
 
   def active_game_in
     game = Game.joins(:players).where("players.user_id = ? AND players.role = ? AND state = ?", self.id, "player", "game_on").first
-    raise StandardError, "User is not in active game" if game.nil?
+    raise StandardError, "User #{self.username} is not in active game" if game.nil?
     game
   end
 
@@ -50,6 +58,12 @@ class User < ApplicationRecord
 
   def player_in_lobby
     player = Player.joins(:game).where("user_id = ? AND games.state = ?", self.id, "lobby").first
+  end
+
+  def player_in_active_game
+    player = Player.joins(:game).where("user_id = ? AND games.state = ? AND role = ?", self.id, "game_on", "player").first
+    raise StandardError, "User #{self.username} is not a player in an active game" if player.nil?
+    player
   end
 
   def create_new_game_lobby

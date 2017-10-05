@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   post '/create_game', to: 'pages#create_game', as: 'create_game'
   get '/game/:id', to: 'pages#game', as: 'game'
   post '/start_game', to: 'pages#start_game', as: 'start_game'
+  post '/resign', to: 'pages#resign', as: 'resign'
 end

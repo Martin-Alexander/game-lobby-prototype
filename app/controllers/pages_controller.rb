@@ -39,6 +39,11 @@ class PagesController < ApplicationController
     end
   end
 
+  def resign
+    current_user.resign if current_user.is_active_player_in_game?
+    redirect_to root_path
+  end
+
   private 
 
   def remove_user_from_lobby

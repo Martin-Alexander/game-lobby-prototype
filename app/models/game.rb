@@ -17,6 +17,18 @@ class Game < ApplicationRecord
     self.update! state: "game_on"
   end
 
+  def active_players
+    Player.where("game_id = ? AND role = ?", self.id, "player")
+  end
+
+  def dead_players
+    Player.where("game_id = ? AND role = ?", self.id, "dead_player")
+  end
+
+  def observers
+    Player.where("game_id = ? AND role = ?", self.id, "observer")
+  end
+
   private
 
   def check_if_user(object)

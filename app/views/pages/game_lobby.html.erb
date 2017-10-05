@@ -24,6 +24,12 @@
   <% end %>
 </div>
 
+<% if @game.host == current_user %>
+  <div id="start-game-button">
+    <%= link_to "Start Game", start_game_path(game_id: @game.id), method: :post %>
+  </div>
+<% end %>
+
 <script>
   document.querySelector("#change-role-button > div > a").addEventListener("click", function() {
     console.log("called");

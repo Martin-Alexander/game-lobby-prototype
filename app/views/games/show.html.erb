@@ -1,6 +1,6 @@
 <%= link_to "Resign", resign_path, method: :post %>
 
-<%= link_to "Pseudo move", test_move_path, method: :post %>
+<%= link_to "Pseudo move", move_path, method: :post %>
 
 <script>
   var userChannel = App.cable.subscriptions.create({ channel: "GameChannel", room: "<%= @game.id%>"}, {

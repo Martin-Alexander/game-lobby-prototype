@@ -3,11 +3,13 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
   root to: 'pages#home', as: 'root'
-  get '/lobby/:id', to: 'pages#game_lobby', as: 'game_lobby'
-  post '/change_role', to: 'pages#change_role', as: 'change_role'
-  post '/create_game', to: 'pages#create_game', as: 'create_game'
-  get '/game/:id', to: 'pages#game', as: 'game'
-  post '/start_game', to: 'pages#start_game', as: 'start_game'
-  post '/resign', to: 'pages#resign', as: 'resign'
-  post '/test_move', to: 'pages#test_move', as: 'test_move'
+  get '/lobby/:id', to: 'pages#lobby', as: 'lobby'
+  
+  patch '/player', to: 'players#update', as: 'player'
+  
+  get '/game/:id', to: 'games#show', as: 'game'
+  post '/game/new', to: 'games#create', as: 'new_game'
+  post '/game/start', to: 'games#start', as: 'start'
+  post '/game/resign', to: 'games#resign', as: 'resign'
+  post '/game/move', to: 'games#move', as: 'move'
 end

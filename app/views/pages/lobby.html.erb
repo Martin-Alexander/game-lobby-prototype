@@ -18,15 +18,15 @@
 
 <div id="change-role-button">
   <% if current_user.player_in_lobby.role == "player" %>
-    <div>Change role to <%= link_to "<strong>Observer</strong>".html_safe, change_role_path(new_role: "observer"), remote: true, method: :post %></div>
+    <div>Change role to <%= link_to "<strong>Observer</strong>".html_safe, player_path(new_role: "observer"), remote: true, method: :patch %></div>
   <% else %>
-    <div>Change role to <%= link_to "<strong>Player</strong>".html_safe, change_role_path(new_role: "player"), remote: true, method: :post %></div>
+    <div>Change role to <%= link_to "<strong>Player</strong>".html_safe, player_path(new_role: "player"), remote: true, method: :patch %></div>
   <% end %>
 </div>
 
 <% if @game.host == current_user %>
   <div id="start-game-button">
-    <%= link_to "Start Game", start_game_path(game_id: @game.id), method: :post %>
+    <%= link_to "Start Game", start_path(game_id: @game.id), method: :post %>
   </div>
 <% end %>
 

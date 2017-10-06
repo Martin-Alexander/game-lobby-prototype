@@ -45,6 +45,9 @@ class PagesController < ApplicationController
   end
 
   def test_move
+    ActionCable.server.broadcast "game_channel_#{current_user.active_game_in.id}", {
+      message: "hi"
+    }
   end
 
   private 

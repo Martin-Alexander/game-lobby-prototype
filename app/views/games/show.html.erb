@@ -3,11 +3,5 @@
 <%= link_to "Pseudo move", move_path, method: :post %>
 
 <script>
-  var userChannel = App.cable.subscriptions.create({ channel: "GameChannel", room: "<%= @game.id%>"}, {
-    connected: function() {},
-    disconnected: function() {},
-    received: function(data) {
-      console.log(data.message);
-    }
-  });
+  <%= render 'games/show.js.erb' %>
 </script>

@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get '/game/:id', to: 'pages#game', as: 'game'
   post '/start_game', to: 'pages#start_game', as: 'start_game'
   post '/resign', to: 'pages#resign', as: 'resign'
+  post '/test_move', to: 'pages#test_move', as: 'test_move'
 end

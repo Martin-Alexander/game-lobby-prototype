@@ -44,6 +44,9 @@ class PagesController < ApplicationController
     redirect_to root_path
   end
 
+  def test_move
+  end
+
   private 
 
   def remove_user_from_lobby

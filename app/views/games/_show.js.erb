@@ -22,8 +22,14 @@ const gameData = new GameData();
 gameData.initializeByGenerationFromSettings(settings);
 <% end %>
 
-// Test 
+var muhFunction;
 
-ajax("POST", "/game/ask", function(response) {
-  console.log(response);
+// Test 
+ajax({
+  method: "POST",
+  url: "/game/ask",
+  data: "hello",
+  success: function(response) {
+    console.log(response);
+  }
 });

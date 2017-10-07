@@ -80,16 +80,3 @@ GameData.prototype.getPlayerById = function(id) {
   }
   return false;
 }
-
-// Testing
-
-const settings = {
-  numberOfPlayers: 2,
-  players: [
-    { number: 1, type: "player"},
-    { number: 2, type: "player"},
-    { number: 3, type: "observer"}
-  ]
-}
-
-var my_game = new GameData();

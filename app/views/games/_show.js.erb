@@ -5,3 +5,19 @@ var userChannel = App.cable.subscriptions.create({ channel: "GameChannel", room:
     console.log(data.message);
   }
 });
+
+<% if @game.host == current_user %>
+const players = [];
+<% @game.players.each_with_index do |player, i| %>
+  players.push({
+    number: "<%= i %>",
+    type: "<%= player.role %>"
+  });
+<% end %>
+const settings = {
+  numberOfPlayers: "<%= @game.active_players.count %>",
+  players: players
+};
+const gameData = new GameData();
+gameData.initializeByGenerationFromSettings(settings);
+<% end %>

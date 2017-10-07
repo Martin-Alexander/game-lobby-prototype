@@ -29,7 +29,7 @@ class GamesController < ApplicationController
   end
 
   def ask
-    render js: params[:message] + "!"
+    # render js: params[:message] + "!"
   end
 
   private

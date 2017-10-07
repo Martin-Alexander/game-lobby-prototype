@@ -1,4 +1,4 @@
-function getRquest(method, url, callback) {
+function ajax(method, url, callback) {
   const httpRequest = new XMLHttpRequest();
   if (!httpRequest) { return false;}
   httpRequest.onreadystatechange = checkForResponse;

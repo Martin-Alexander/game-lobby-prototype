@@ -28,6 +28,10 @@ class GamesController < ApplicationController
     }    
   end
 
+  def ask
+    render js: "Complete"
+  end
+
   private
 
   def redirect_away_from_invalid_game(game)

@@ -21,3 +21,9 @@ const settings = {
 const gameData = new GameData();
 gameData.initializeByGenerationFromSettings(settings);
 <% end %>
+
+// Test 
+
+ajax("POST", "/game/ask", function(response) {
+  console.log(response);
+});

@@ -6,6 +6,29 @@ var userChannel = App.cable.subscriptions.create({ channel: "GameChannel", room:
   }
 });
 
+/*
+  if (host)
+    ask server if gamedata needs to be initialized
+    if (game data has not been initialized)
+      initialize it
+      send it to server for other players
+    else
+      ask server for gamedata
+      assume that other player alread have it
+    end
+  else
+    ask server if gamedata exists
+    if (gamedata exists)
+      initialize gamedata
+    else
+      just wait to for it to be sent by the host
+    end
+  end
+
+
+*/
+
+
 <% if @game.host == current_user %>
 const players = [];
 <% @game.players.each_with_index do |player, i| %>

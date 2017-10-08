@@ -65,11 +65,11 @@ GameData.prototype.toJSON = function() {
   for(let i = 0; i < this.players.length; i++) {
     serializedPlayers.push(this.players[i].serialize());
   }
-  return JSON.stringify({
+  return {
     turn: this.turn,
     players: serializedPlayers,
     board: this.board.serialize()
-  });
+  };
 }
 
 GameData.prototype.getPlayerById = function(id) {

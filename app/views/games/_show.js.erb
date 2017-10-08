@@ -41,20 +41,33 @@ const settings = {
   players: players
 };
 
-<% if @game.host == current_user %>
+<% if @game.host == current_user && @game.data != "" %>
+  gameData.initializeByGenerationFromSettings(settings);
+  sendGameDataToServer(gameData);
+<% elsif @game.data != "" %>
+  gameData.initializeFromGameDataJSON(JSON.parse("<%= @game.data %>"));
+<% end %>
+
+// function doesGameDataExistOnServer() {
+//   ajax({
+//     method: "POST",
+//     url: "/game/ask",
+//     data: { 
+//       question: "gamedata initialized",
+//       details: { 
+//         gameId: "<%= @game.id %>"
+//       }
+//     },
+//     success: function(data) { return data.response; }
+//   });
+// }
+
+function sendGameDataToServer(gameDataObject) {
   ajax({
     method: "POST",
-    url: "/game/ask",
-    data: { 
-      question: "gamedata initialized",
-      details: { 
-        gameId: "<%= @game.id %>"
-      }
-    },
-    success: function(data) {
-      if (data.response == false) {
-        gameData.initializeByGenerationFromSettings(settings);
-      }
+    url: "/game/new_game_data",
+    data: {
+      gameData: JSON.stringify(gameDataObject.toJSON())
     }
   });
-<% end %>
+}

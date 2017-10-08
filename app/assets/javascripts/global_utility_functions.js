@@ -7,11 +7,11 @@ function ajax(arguments) {
   if (arguments.method == "POST") {
     httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   }
-  httpRequest.send("main=" + JSON.stringify(arguments.data));
+  httpRequest.send("json=" + JSON.stringify(arguments.data));
 
   function checkForResponse() {
     if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
-      successCallbackFunction(httpRequest.responseText);
+      successCallbackFunction(JSON.parse(httpRequest.responseText));
     }
   }
 }

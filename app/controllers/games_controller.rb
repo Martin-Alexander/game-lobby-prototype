@@ -29,7 +29,18 @@ class GamesController < ApplicationController
   end
 
   def ask
-    # render js: params[:message] + "!"
+    question = JSON.parse(params[:json])
+    case question["question"]
+    when "gamedata initialized"
+      game = Game.find(question["details"]["gameId"])
+      if game.data == ""
+        response = false
+      else
+        response = true
+      end
+    end
+
+    render json: { question: question["question"], response: response }
   end
 
   private

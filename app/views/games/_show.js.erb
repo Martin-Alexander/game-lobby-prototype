@@ -24,12 +24,10 @@ var userChannel = App.cable.subscriptions.create({ channel: "GameChannel", room:
       just wait to for it to be sent by the host
     end
   end
-
-
 */
 
+const gameData = new GameData();
 
-<% if @game.host == current_user %>
 const players = [];
 <% @game.players.each_with_index do |player, i| %>
   players.push({
@@ -37,22 +35,26 @@ const players = [];
     type: "<%= player.role %>"
   });
 <% end %>
+
 const settings = {
   numberOfPlayers: "<%= @game.active_players.count %>",
   players: players
 };
-const gameData = new GameData();
-gameData.initializeByGenerationFromSettings(settings);
+
+<% if @game.host == current_user %>
+  ajax({
+    method: "POST",
+    url: "/game/ask",
+    data: { 
+      question: "gamedata initialized",
+      details: { 
+        gameId: "<%= @game.id %>"
+      }
+    },
+    success: function(data) {
+      if (data.response == false) {
+        gameData.initializeByGenerationFromSettings(settings);
+      }
+    }
+  });
 <% end %>
-
-var muhFunction;
-
-// Test 
-ajax({
-  method: "POST",
-  url: "/game/ask",
-  data: settings,
-  success: function(response) {
-    console.log(response);
-  }
-});

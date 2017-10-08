@@ -28,6 +28,11 @@ class GamesController < ApplicationController
     }    
   end
 
+  def send_game_data
+    # raise
+    byebug
+  end
+
   # def ask
   #   question = JSON.parse(params[:json])
   #   case question["question"]

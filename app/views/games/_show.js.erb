@@ -41,7 +41,7 @@ const settings = {
   players: players
 };
 
-<% if @game.host == current_user && @game.data != "" %>
+<% if @game.host == current_user && @game.data == "" %>
   gameData.initializeByGenerationFromSettings(settings);
   sendGameDataToServer(gameData);
 <% elsif @game.data != "" %>
@@ -49,7 +49,7 @@ const settings = {
 <% end %>
 
 // function doesGameDataExistOnServer() {
-//   ajax({
+//   ajax({``
 //     method: "POST",
 //     url: "/game/ask",
 //     data: { 
@@ -65,9 +65,10 @@ const settings = {
 function sendGameDataToServer(gameDataObject) {
   ajax({
     method: "POST",
-    url: "/game/new_game_data",
+    url: "/game/send_game_data",
     data: {
-      gameData: JSON.stringify(gameDataObject.toJSON())
+      gameId: "<%= @game.id %>",
+      gameData: gameDataObject.toJSON()
     }
   });
 }

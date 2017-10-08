@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   post '/game/resign', to: 'games#resign', as: 'resign'
   post '/game/move', to: 'games#move', as: 'move'
   # post '/game/ask', to: 'games#ask', as: 'ask'
+  post '/game/send_game_data', to: 'games#send_game_data', as: 'send_game_data'
 end

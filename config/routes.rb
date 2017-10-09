@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   
   get '/game/:id', to: 'games#show', as: 'game'
   post '/game/new', to: 'games#create', as: 'new_game'
-  post '/game/start', to: 'games#start', as: 'start'
-  post '/game/resign', to: 'games#resign', as: 'resign'
-  post '/game/move', to: 'games#move', as: 'move'
+  post '/game/:id/start', to: 'games#start', as: 'start'
+  post '/game/:id/resign', to: 'games#resign', as: 'resign'
+  post '/game/:id/move', to: 'games#move', as: 'move'
+  post '/game/:id/send_game_data', to: 'games#send_game_data', as: 'send_game_data'
   # post '/game/ask', to: 'games#ask', as: 'ask'
-  post '/game/send_game_data', to: 'games#send_game_data', as: 'send_game_data'
 end

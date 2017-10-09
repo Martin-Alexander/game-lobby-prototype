@@ -2,22 +2,21 @@ var userChannel = App.cable.subscriptions.create({ channel: "GameChannel", room:
   connected: function() {},
   disconnected: function() {},
   received: function(data) {
-    console.log(data.message);
+    switch (data.identifier) {
+      case "newly_initialized_gamedata": 
+
+      break;  
+    }
   }
 });
 
 /*
   if (host)
-    ask server if gamedata needs to be initialized
     if (game data has not been initialized)
       initialize it
       send it to server for other players
-    else
-      ask server for gamedata
-      assume that other player alread have it
     end
   else
-    ask server if gamedata exists
     if (gamedata exists)
       initialize gamedata
     else
@@ -25,6 +24,8 @@ var userChannel = App.cable.subscriptions.create({ channel: "GameChannel", room:
     end
   end
 */
+
+var waitingForGameData = false;
 
 const gameData = new GameData();
 
@@ -45,7 +46,9 @@ const settings = {
   gameData.initializeByGenerationFromSettings(settings);
   sendGameDataToServer(gameData);
 <% elsif @game.data != "" %>
-  gameData.initializeFromGameDataJSON(JSON.parse("<%= @game.data %>"));
+  gameData.initializeFromGameDataJSON(JSON.parse("<%= raw j @game.data %>"));
+<% else %>
+  waitingForGameData = true
 <% end %>
 
 // function doesGameDataExistOnServer() {
@@ -65,10 +68,7 @@ const settings = {
 function sendGameDataToServer(gameDataObject) {
   ajax({
     method: "POST",
-    url: "/game/send_game_data",
-    data: {
-      gameId: "<%= @game.id %>",
-      gameData: gameDataObject.toJSON()
-    }
+    url: "/game/" + "<%= @game.id %>" + "/send_game_data",
+    data: gameDataObject.toJSON()
   });
 }

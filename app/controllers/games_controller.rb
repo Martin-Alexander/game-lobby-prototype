@@ -10,7 +10,7 @@ class GamesController < ApplicationController
   end
 
   def start
-    game = Game.find_by_id(params[:game_id])
+    game = Game.find_by_id(params[:id])
     if game && game.host == current_user
       game.start
       redirect_to game_path(game)
@@ -29,8 +29,13 @@ class GamesController < ApplicationController
   end
 
   def send_game_data
-    # raise
-    byebug
+    Game.find(params[:id]).update! data: params[:json]
+    # ActionCable.server.broadcast "game_channel_#{current_user.active_game_in.id}", {
+    #   identifier: "newly_initialized_gamedata",
+    #   content: {
+    #     gamedata: current_user.active_game_in.data
+    #   }
+    # }
   end
 
   # def ask
@@ -44,7 +49,6 @@ class GamesController < ApplicationController
   #       response = true
   #     end
   #   end
-
   #   render json: { question: question["question"], response: response }
   # end
 

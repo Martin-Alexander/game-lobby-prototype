@@ -1,6 +1,6 @@
-<%= link_to "Resign", resign_path, method: :post %>
+<%= link_to "Resign", resign_path(@game), method: :post %>
 
-<%= link_to "Pseudo move", move_path, method: :post %>
+<%= link_to "Pseudo move", move_path(@game), method: :post %>
 
 <script>
   <%= render 'games/show.js.erb' %>
